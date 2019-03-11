@@ -15,9 +15,13 @@ const Router = require("koa-router");
 const router = new Router();
 
 // *** Auth API handlers ***
-// const authHandlers = fs.readdirSync(path.join(__dirname, "api/auth")).sort();
+const chartDataHandlers = fs
+  .readdirSync(path.join(__dirname, "api/chartData"))
+  .sort();
 
-// authHandlers.forEach(handler => require("./api/auth/" + handler).init(router));
+chartDataHandlers.forEach(handler =>
+  require("./api/chartData/" + handler).init(router)
+);
 
 const environment = process.env.NODE_ENV;
 
