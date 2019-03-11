@@ -31,6 +31,7 @@
     "optimize-css-assets-webpack-plugin": "^5.0.1",
     "postcss-loader": "^3.0.0",
     "sass-loader": "^7.1.0",
+    "svg-url-loader": "^2.3.2",
     "webpack": "^4.29.6",
     "webpack-cli": "^3.2.3"
   },

@@ -37,6 +37,8 @@ yarn-error.log*
 
 # keys
 # server/config/keys.js
+.DS_Store
+**/.DS_Store
 
 #dist
 /dist

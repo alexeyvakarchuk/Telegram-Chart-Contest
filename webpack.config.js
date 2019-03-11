@@ -29,9 +29,28 @@ let config = {
           "postcss-loader",
           "sass-loader"
         ]
-      }
+      },
+      {
+        test: /\.svg/,
+        use: {
+            loader: 'svg-url-loader',
+            options: {}
+        }
+      },
+      // {
+      //   test: /\.(eot|svg|ttf|woff|woff2)$/,
+      //   use: [
+      //            {
+      //                loader: 'file-loader?name=./assets/fonts/webfonts/[name].[ext]'
+      //            },
+      //            {
+      //                loader: 'file-loader?name=./assets/fonts/Roboto/[name].[ext]'
+      //            }
+      //        ]
+      // }
     ]
   },
+  
   plugins: [
     new MiniCssExtractPlugin({
       // Options similar to the same options in webpackOptions.output

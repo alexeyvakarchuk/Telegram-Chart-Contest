@@ -3,81 +3,7 @@
 @import 'libs/sass-mediaqueries/media-queries'
 @import 'base/fonts'
 @import 'base/colours'
-
-// Bootstrap 4 Grid only
-//
-// Includes relevant variables and mixins for the regular (non-flexbox) grid
-// system, as well as the generated predefined classes (e.g., `.col-4-sm`).
-
-@import '~bootstrap/scss/bootstrap-grid'
-
-.col-lg,
-.col-lg-1,
-.col-lg-10,
-.col-lg-11,
-.col-lg-12,
-.col-lg-2,
-.col-lg-3,
-.col-lg-4,
-.col-lg-5,
-.col-lg-6,
-.col-lg-7,
-.col-lg-8,
-.col-lg-9,
-.col-md,
-.col-md-1,
-.col-md-10,
-.col-md-11,
-.col-md-12,
-.col-md-2,
-.col-md-3,
-.col-md-4,
-.col-md-5,
-.col-md-6,
-.col-md-7,
-.col-md-8,
-.col-md-9,
-.col-sm,
-.col-sm-1,
-.col-sm-10,
-.col-sm-11,
-.col-sm-12,
-.col-sm-2,
-.col-sm-3,
-.col-sm-4,
-.col-sm-5,
-.col-sm-6,
-.col-sm-7,
-.col-sm-8,
-.col-sm-9,
-.col-xl,
-.col-xl-1,
-.col-xl-10,
-.col-xl-11,
-.col-xl-12,
-.col-xl-2,
-.col-xl-3,
-.col-xl-4,
-.col-xl-5,
-.col-xl-6,
-.col-xl-7,
-.col-xl-8,
-.col-xl-9,
-.col-xs,
-.col-xs-1,
-.col-xs-10,
-.col-xs-11,
-.col-xs-12,
-.col-xs-2,
-.col-xs-3,
-.col-xs-4,
-.col-xs-5,
-.col-xs-6,
-.col-xs-7,
-.col-xs-8,
-.col-xs-9 
-  box-sizing: border-box
-
+@import 'base/veriabels'
 
 *
   box-sizing: border-box
@@ -102,8 +28,8 @@
   opacity: 1
 
 body
-  background: green
-  font-family: 'Montserrat', open-sans
+  background: var(--base-bg)
+  font-family: 'Open Sans', sans-serif;
   &.body-dark
     background: #232323
   &.overflowed
@@ -123,9 +49,74 @@ body
 canvas
   user-select: none
 
+.wrapper 
+  padding: 30px 15px 0
 
-// // Components
+.caption
+  font-weight: bold
+  margin-bottom: 25px    
 
-@import "./components/input-field"
-@import "./components/buttons"
+.chart
+  width: 100%
+  height: 400px
+  margin-bottom: 25px
+  background-color: var(--stroke-color)
 
+.min-chart
+  width: 100%
+  height: 40px
+  margin-bottom: 25px
+  background-color: var(--stroke-color)
+
+.toggles
+  display: flex
+
+.toggle
+  --toggle-color: var(--joined-chart)
+  display: flex
+  cursor: pointer
+  margin-right: 15px
+  align-items: center
+  border: 1px solid  var(--stroke-color)
+  padding: 10px 20px 10px 10px
+  border-radius: 30px
+  &_left-followers
+    --toggle-color: var(--left-chart)
+  &__check
+    display: none
+  &__check:checked ~ .toggle__round:after
+    width: 0
+    height: 0
+
+  &__round 
+    display: flex
+    position: relative
+    justify-content: center
+    border: 1px solid var(--toggle-color)
+    background-color: var(--toggle-color)
+    width: 19px
+    height: 19px
+    border-radius: 50%
+    margin-right: 10px
+    &:after 
+      content: ''
+      position: absolute
+      top: 0
+      left: 0
+      right: 0
+      bottom: 0
+      margin: auto
+      display: block
+      border-radius: 50%
+      width: 100%
+      height: 100%
+      background-color: #fff
+      transition: all 0.2s linear
+
+  &__tick
+    display: block
+    width: 60%
+    background-image: url('../icons/tick.svg')
+    background-size: contain
+    background-position: center center
+    background-repeat: no-repeat

@@ -7,6 +7,20 @@ html
     meta(http-equiv="X-UA-Compatible" content="ie=edge")
     link(rel="stylesheet" type="text/css" href="/dist/main.css")
   body
-
-
+    .wrapper
+      h4.caption Followers
+      .chart
+      .min-chart
+      .toggles
+        label().toggle
+          input(type="checkbox").toggle__check
+          span.toggle__round
+            span.toggle__tick
+          span.toggle__text Joined
+        label().toggle.toggle_left-followers
+          input(type="checkbox").toggle__check
+          span.toggle__round
+            span.toggle__tick
+          span.toggle__text Left
+          
   script(src="/dist/bundle.js")
