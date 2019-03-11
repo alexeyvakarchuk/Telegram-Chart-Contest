@@ -1,0 +1,18 @@
+{
+  "presets": ["@babel/preset-env"],
+  "plugins": [
+    [
+      "module-resolver",
+      {
+        "root": ["./"],
+        "alias": {
+          "store": "./redux/store",
+          "utils": "./views/utils",
+          "components": "./views/components",
+          "pages": "./views/pages",
+          "icons": "./views/icons"
+        }
+      }
+    ]
+  ]
+}
