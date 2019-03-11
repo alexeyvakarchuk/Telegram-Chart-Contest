@@ -22,6 +22,7 @@
     "compression-webpack-plugin": "^2.0.0",
     "css-hot-loader": "^1.4.3",
     "css-loader": "^2.1.1",
+    "file-loader": "^3.0.1",
     "koa-convert": "^1.2.0",
     "koa-webpack-dev-middleware": "^2.0.2",
     "koa-webpack-hot-middleware": "^1.0.3",

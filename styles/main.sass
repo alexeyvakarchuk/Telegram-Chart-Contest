@@ -28,8 +28,8 @@
   opacity: 1
 
 body
+  font-family: 'Helvetica', sans-serif
   background: var(--base-bg)
-  font-family: 'Open Sans', sans-serif;
   &.body-dark
     background: #232323
   &.overflowed
@@ -46,8 +46,6 @@ body
   margin-left: 0
   margin-right: 0
 
-canvas
-  user-select: none
 
 .wrapper 
   padding: 30px 15px 0
@@ -112,6 +110,9 @@ canvas
       height: 100%
       background-color: #fff
       transition: all 0.2s linear
+
+  &__text
+    user-select: none
 
   &__tick
     display: block
