@@ -1,14 +1,9 @@
 import "@babel/polyfill";
 import "./styles/main.sass";
+import init from "scripts/init";
 
-import fetchChartData from "scripts/fetchChartData";
-
-(async () => {
-  await fetchChartData();
-})();
+init();
 
 if (module.hot) {
-  module.hot.accept("./scripts/fetchChartData", async () => {
-    await fetchChartData();
-  });
+  module.hot.accept("./scripts/init", init);
 }

@@ -3,6 +3,8 @@ const webpack = require("webpack");
 const OptimizeCssAssetsPlugin = require("optimize-css-assets-webpack-plugin");
 const CompressionPlugin = require("compression-webpack-plugin");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
+const BundleAnalyzerPlugin = require("webpack-bundle-analyzer")
+  .BundleAnalyzerPlugin;
 
 const environment = process.env.NODE_ENV;
 
@@ -60,7 +62,6 @@ let config = {
 
 if (environment === "development") {
   config.entry = [
-    // "webpack/hot/dev-server",
     "webpack-hot-middleware/client?localhost:3000",
     "@babel/polyfill",
     "./index.js"
@@ -91,6 +92,8 @@ if (environment === "development") {
       minRatio: 0.8
     })
   );
+
+  config.plugins.push(new BundleAnalyzerPlugin());
 }
 
 module.exports = config;
