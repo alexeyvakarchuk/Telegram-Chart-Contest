@@ -8,7 +8,7 @@ const environment = process.env.NODE_ENV;
 
 let config = {
   mode: environment,
-  entry: ["webpack-hot-middleware/client", "@babel/polyfill", "./index.js"],
+  entry: ["@babel/polyfill", "./index.js"],
   output: {
     publicPath: "/",
     filename: "bundle.js"
