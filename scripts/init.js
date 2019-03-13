@@ -5,36 +5,47 @@ const init = async () => {
 
   const firstChardData = data[0];
 
-  const maxXFirstChart = firstChardData.columns[0].length;
-  const maxYFirstChart =  Math.max.apply(null, firstChardData.columns[1].slice(1));
+  console.log(firstChardData);
 
-  const minChart = document.querySelector('.min-chart');
-  const minChartSvg = document.querySelector('.minChartSvg');
+  const maxYArray = firstChardData.columns
+    .slice(1)
+    .map(el => Math.max(...el.slice(1)));
 
-  const widthMinSvg = minChartSvg.offsetWidth;
-  minChartSvg.setAttribute('viewBox', `0 0 ${maxXFirstChart} ${maxYFirstChart}`)
-  // minChartSvg.setAttribute('width', maxYFirstChart);
-  // minChartSvg.setAttribute('height', maxXFirstChart);
-  
-  let x = 1;
+  const maxY = Math.max(...maxYArray);
 
-  firstChardData.columns[1].slice(1).forEach((element) => {
-    let circl = document.createElementNS("http://www.w3.org/2000/svg", "circle");
-    circl.setAttribute("cx", x);
-    circl.setAttribute("cy", element);
-    circl.setAttribute("r", 1);
-    minChartSvg.appendChild(circl);
-    x++;
+  const minChart = document.querySelector(".min-chart");
+  const minChartSvg = document.querySelector(".minChartSvg");
+
+  const proportion = maxY / minChartSvg.clientHeight;
+
+  minChartSvg.setAttribute(
+    "viewBox",
+    `0 0 ${minChartSvg.clientWidth * proportion} ${maxY}`
+  );
+
+  const interval =
+    minChartSvg.clientWidth / (firstChardData.columns[0].length - 2);
+
+  const chartPaths = firstChardData.columns.slice(1).map(pathData => {
+    let d = `M ${1 * proportion} ${maxY - pathData[1]}`;
+
+    pathData.slice(2).forEach((value, index) => {
+      d += ` L ${++index * interval * proportion} ${maxY - value}`;
+    });
+
+    return { pathName: pathData[0], d };
   });
 
-  console.log(firstChardData);
-  console.log(maxYFirstChart);
-  console.log(maxXFirstChart);
-  console.log(minChartSvg.clientWidth);
-  return {
+  chartPaths.forEach(({ pathName, d }) => {
+    const path = document.createElementNS("http://www.w3.org/2000/svg", "path");
 
-  }
-  // Math.max.apply(null, data[0].columns[1].slice(1))
+    path.setAttribute("d", d);
+    path.setAttribute("fill", "transparent");
+    path.setAttribute("stroke", firstChardData.colors[pathName]);
+    path.setAttribute("stroke-width", "10");
+
+    minChartSvg.appendChild(path);
+  });
 };
 
 export default init;
