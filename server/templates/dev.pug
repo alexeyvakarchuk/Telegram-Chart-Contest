@@ -10,7 +10,32 @@ html
     .wrapper
       h4.caption Followers
       .chart
+        svg.graph(xmlns='http://www.w3.org/2000/svg', xmlns:xlink='http://www.w3.org/1999/xlink')
+          g#xGrid.grid.x-grid
+            line(x1='90', x2='90', y1='5', y2='371')
+          g#yGrid.grid.y-grid
+            line(x1='90', x2='900', y1='370', y2='370')
+          g.labels.x-labels
+            text(x='100', y='400') 2008
+            text(x='246', y='400') 2009
+            text(x='392', y='400') 2010
+            text(x='538', y='400') 2011
+            text(x='684', y='400') 2012
+            text.label-title(x='400', y='440') Year
+          g.labels.y-labels
+            text(x='80', y='15') 15
+            text(x='80', y='131') 10
+            text(x='80', y='248') 5
+            text(x='80', y='373') 0
+            text.label-title(x='50', y='200') Price
+          g.data(data-setname='Our first data set')
+            circle(cx='90', cy='192', data-value='7.2', r='4')
+            circle(cx='240', cy='141', data-value='8.1', r='4')
+            circle(cx='388', cy='179', data-value='7.7', r='4')
+            circle(cx='531', cy='200', data-value='6.8', r='4')
+            circle(cx='677', cy='104', data-value='6.7', r='4')
       .min-chart
+        svg(xmlns='http://www.w3.org/2000/svg', class="minChartSvg", preserveAspectRatio="none")
       .toggles
         label().toggle
           input(type="checkbox").toggle__check
@@ -22,5 +47,7 @@ html
           span.toggle__round
             span.toggle__tick
           span.toggle__text Left
+      
+
           
   script(src="/dist/bundle.js")
