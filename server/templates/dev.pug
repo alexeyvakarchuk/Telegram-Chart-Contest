@@ -10,7 +10,7 @@ html
     .wrapper
       h4.caption Followers
       .chart
-        svg.graph(xmlns='http://www.w3.org/2000/svg', xmlns:xlink='http://www.w3.org/1999/xlink')
+        svg.graph(xmlns='http://www.w3.org/2000/svg')
           g#xGrid.grid.x-grid
             line(x1='90', x2='90', y1='5', y2='371')
           g#yGrid.grid.y-grid
@@ -36,6 +36,7 @@ html
             circle(cx='677', cy='104', data-value='6.7', r='4')
       .min-chart
         svg(xmlns='http://www.w3.org/2000/svg', class="minChartSvg")
+        .box
       .toggles
         label().toggle
           input(type="checkbox").toggle__check
@@ -47,7 +48,6 @@ html
           span.toggle__round
             span.toggle__tick
           span.toggle__text Left
-      
 
           
   script(src="/dist/bundle.js")

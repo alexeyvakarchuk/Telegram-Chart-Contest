@@ -1,4 +1,5 @@
 import fetchChartData from "scripts/fetchChartData";
+import { get } from "https";
 
 const init = async () => {
   const data = await fetchChartData();
@@ -11,9 +12,8 @@ const init = async () => {
     .slice(1)
     .map(el => Math.max(...el.slice(1)));
 
-  const maxY = Math.max(...maxYArray);
+  const maxY = Math.max(...maxYArray)  + 5;
 
-  const minChart = document.querySelector(".min-chart");
   const minChartSvg = document.querySelector(".minChartSvg");
 
   const proportion = maxY / minChartSvg.clientHeight;
@@ -46,6 +46,34 @@ const init = async () => {
 
     minChartSvg.appendChild(path);
   });
-};
 
+
+  let box =  document.querySelector('.box');
+  let coords, shiftX;
+
+  function getCoords(elem) { 
+    var box = elem.getBoundingClientRect();
+    return {
+      left: box.left + pageXOffset
+    }
+  };
+
+  function moveAt(e) {
+    e.target.style.left = e.pageX - shiftX + 'px';
+  };
+
+  box.addEventListener('mousedown', (e) => {
+    coords = getCoords(e.target);
+    shiftX = e.pageX - coords.left;
+
+    document.onmousemove = function(e) {
+      moveAt(e);
+    };
+  
+    box.onmouseup = function() {
+      document.onmousemove = null;
+      box.onmouseup = null;
+    };
+  });
+}
 export default init;
