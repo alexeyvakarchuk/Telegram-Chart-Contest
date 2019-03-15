@@ -1,6 +1,8 @@
 import axios from "axios";
 import { baseURL } from "config";
 
+const ip = require("ip");
+
 const fetchChartData = async () => {
   try {
     const { data } = await axios({
