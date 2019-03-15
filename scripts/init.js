@@ -27,10 +27,10 @@ const init = async () => {
     minChartSvg.clientWidth / (firstChardData.columns[0].length - 2);
 
   const chartPaths = firstChardData.columns.slice(1).map(pathData => {
-    let d = `M ${1 * proportion} ${maxY - pathData[1]}`;
+    let d = `M 0 ${maxY - pathData[1]}`;
 
     pathData.slice(2).forEach((value, index) => {
-      d += ` L ${++index * interval * proportion} ${maxY - value}`;
+      d += ` L ${++index * interval * proportion} ${maxY + 5 - value}`;
     });
 
     return { pathName: pathData[0], d };
