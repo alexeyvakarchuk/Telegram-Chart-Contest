@@ -70,9 +70,21 @@ body
 .box 
   width: 20%
   height: 100%
+  left: 20px
   position: absolute
   top: 0
+  cursor: move
   background-color: rgba(0,0,255, 0.3)
+  &__l, &__r 
+    width: 10%
+    height: 100%
+    position: absolute
+    top: 0
+    cursor: col-resize
+  &__l 
+    left: 0
+  &__r
+    right: 0
 .toggles
   display: flex
 

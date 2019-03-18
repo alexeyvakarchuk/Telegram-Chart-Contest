@@ -1,5 +1,5 @@
 import fetchChartData from "scripts/fetchChartData";
-import { get } from "https";
+import './rangeGraph'
 
 const init = async () => {
   const data = await fetchChartData();
@@ -47,33 +47,5 @@ const init = async () => {
     minChartSvg.appendChild(path);
   });
 
-
-  let box =  document.querySelector('.box');
-  let coords, shiftX;
-
-  function getCoords(elem) { 
-    var box = elem.getBoundingClientRect();
-    return {
-      left: box.left + pageXOffset
-    }
-  };
-
-  function moveAt(e) {
-    e.target.style.left = e.pageX - shiftX + 'px';
-  };
-
-  box.addEventListener('mousedown', (e) => {
-    coords = getCoords(e.target);
-    shiftX = e.pageX - coords.left;
-
-    document.onmousemove = function(e) {
-      moveAt(e);
-    };
-  
-    box.onmouseup = function() {
-      document.onmousemove = null;
-      box.onmouseup = null;
-    };
-  });
 }
 export default init;
