@@ -48,9 +48,16 @@ box.addEventListener('mousedown', (e) => {
 
 boxL.addEventListener('mousedown' , (e) => {
     e.stopPropagation(); 
+    let startPos = e.target.parentNode.offsetLeft;
+    let startWidth = e.target.parentNode.clientWidth;
+    console.log(startPos);
 
     boxL.onmousemove = (e) => {
-        console.log(e);
+
+        e.target.parentNode.style.left = e.pageX - e.target.clientWidth + 'px';
+        console.log(startPos) 
+        console.log(startPos - e.target.parentNode.offsetLeft) 
+        e.target.parentNode.style.width =  startWidth +  startPos - e.target.parentNode.offsetLeft + 'px';
     }
     boxL.onmouseup = (e) => {
         boxL.onmousemove = boxL.onmouseup = null;
