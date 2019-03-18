@@ -1,19 +1,16 @@
 const minChart = document.querySelector(".min-chart");
+const minChartWidth = minChart.clientWidth;
 
 const box = document.querySelector(".box");
 const boxL = document.querySelector(".box__l");
-let coords, shiftX;
 
-//Функция которая ставит область в конец родителя при инициализации
-function firstPosition(elem) {
-  // console.log(elem.clientWidth);
-  // console.log(elem.parentNode.clientWidth);
-  elem.style.left = elem.parentNode.clientWidth - elem.clientWidth + "px";
-}
+// Set's area's left offset to the end of minChart on initialization
+const setInitialPosition = el => {
+  el.style.left = `${minChartWidth - el.clientWidth}px`;
+};
 
-firstPosition(box);
+setInitialPosition(box);
 
-//Ф-ция которая будет выдавать смещение относительно родительского узла
 const getCoords = el => {
   const { top, left } = el.getBoundingClientRect();
 
@@ -23,56 +20,67 @@ const getCoords = el => {
   };
 };
 
-//Ф-ция которая будет управлять движением и устанавливать новые координаты
-function moveAt(e) {
-  console.log(e.pageX - shiftX);
-  console.log("shiftX: " + shiftX);
-  console.log("e.pageX: " + e.pageX);
-  if (e.pageX - shiftX <= 0) {
-    e.target.style.left = "0px";
-  } else if (
-    e.pageX - shiftX >=
-    e.target.parentNode.clientWidth - e.target.clientWidth
-  ) {
-    e.target.style.left =
-      e.target.parentNode.clientWidth - e.target.clientWidth + "px";
-  } else {
-    e.target.style.left = e.pageX - shiftX + "px";
-  }
-}
+// *** Simple Drag&Drop ***
 
-box.addEventListener("mousedown", e => {
-  coords = getCoords(e.target);
-  shiftX = e.pageX - coords.left;
+box.onmousedown = e => {
+  const shiftX = e.pageX - getCoords(box).left;
 
-  document.onmousemove = function(e) {
-    moveAt(e);
+  const boxWidth = box.clientWidth;
+
+  const minLeft = 0;
+  const maxLeft = minChartWidth - boxWidth;
+
+  document.onmousemove = e => {
+    const left = e.pageX - 15 - shiftX;
+
+    // console.log(left, minChartWidth, boxWidth);
+
+    if (left <= minLeft) {
+      box.style.left = "0px";
+    } else if (left >= maxLeft) {
+      box.style.left = `${maxLeft}px`;
+    } else {
+      box.style.left = `${left}px`;
+    }
   };
 
-  document.onmouseup = function() {
-    document.onmousemove = document.onmouseup = null;
+  document.onmouseup = () => {
+    document.onmousemove = null;
+    document.onmouseup = null;
   };
-});
+};
 
-// *** Left corner drag ***
+// *** Left corner expand ***
 
 boxL.onmousedown = e => {
   e.stopPropagation();
 
-  const boxOffsetLeft = box.offsetLeft;
-  const boxtWidth = box.clientWidth;
-
-  const minChartWidth = minChart.offsetWidth;
   const shiftX = e.pageX - getCoords(boxL).left;
 
-  document.onmousemove = e => {
-    const left = e.pageX - 15 - shiftX;
-    const width = boxOffsetLeft + boxtWidth - left;
+  const minLeft = 0;
+  const maxLeft = box.offsetLeft + box.clientWidth - 100;
 
-    if (left > 0 && width > 100) {
+  document.onmousemove = e => {
+    const boxOffsetLeft = box.offsetLeft;
+    const boxWidth = box.clientWidth;
+
+    let left = e.pageX - 15 - shiftX;
+
+    if (left <= minLeft) {
+      left = 0;
+      box.style.left = "0px";
+    } else if (left >= maxLeft) {
+      left = maxLeft;
+      box.style.left = `${maxLeft}px`;
+    } else {
       box.style.left = `${left}px`;
-      box.style.width = `${width}px`;
     }
+
+    const width = boxOffsetLeft + boxWidth - left;
+
+    // console.log(left, width, minChartWidth);
+
+    box.style.width = width > 100 ? `${width}px` : "100px";
   };
 
   document.onmouseup = () => {
