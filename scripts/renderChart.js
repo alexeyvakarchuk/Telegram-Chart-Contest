@@ -23,8 +23,10 @@ const renderChart = (chartData, boxWidth, leftOffset) => {
 
   chartSvg.style.width = chartContainer.clientWidth * k;
 
+  chartSvg.style.transform = `translateX(-${leftOffset * k}px)`;
+
   const interval =
-    (chartSvg.clientWidth * k) / (chartData.columns[0].length - 2);
+    (chartContainer.clientWidth * k) / (chartData.columns[0].length - 2);
 
   const chartPaths = chartData.columns.slice(1).map(pathData => {
     let d = `M 0 ${maxY - pathData[1]}`;
@@ -47,7 +49,7 @@ const renderChart = (chartData, boxWidth, leftOffset) => {
     path.setAttribute("d", d);
     path.setAttribute("fill", "transparent");
     path.setAttribute("stroke", chartData.colors[pathName]);
-    path.setAttribute("stroke-width", 1 * k);
+    path.setAttribute("stroke-width", 1.5);
 
     shartG.appendChild(path);
   });
