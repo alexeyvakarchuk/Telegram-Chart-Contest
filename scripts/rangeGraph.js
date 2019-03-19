@@ -3,6 +3,7 @@ const minChartWidth = minChart.clientWidth;
 
 const box = document.querySelector(".box");
 const boxL = document.querySelector(".box__l");
+const boxR = document.querySelector(".box__r");
 
 // Set's area's left offset to the end of minChart on initialization
 const setInitialPosition = el => {
@@ -90,3 +91,34 @@ boxL.onmousedown = e => {
 };
 
 boxL.ondragstart = null;
+
+// *** Right corner expand ***
+
+boxR.onmousedown = e => {
+  e.stopPropagation();
+
+  const shiftX = getCoords(boxR).left + boxR.clientWidth - e.pageX;
+
+  document.onmousemove = e => {
+    const boxOffsetLeft = box.offsetLeft;
+    const boxWidth = box.clientWidth;
+
+    const left = e.pageX - 15 + shiftX;
+    const right = minChartWidth - left;
+
+    const width = left - boxOffsetLeft;
+
+    if (right >= 0) {
+      box.style.width = width > 100 ? `${width}px` : "100px";
+    } else {
+      box.style.width = `${minChartWidth - boxOffsetLeft}px`;
+    }
+  };
+
+  document.onmouseup = () => {
+    document.onmousemove = null;
+    document.onmouseup = null;
+  };
+};
+
+boxR.ondragstart = null;
