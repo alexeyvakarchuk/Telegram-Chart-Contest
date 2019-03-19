@@ -1,4 +1,5 @@
 import fetchChartData from "scripts/fetchChartData";
+import renderChart from "./renderChart";
 import "./rangeGraph";
 import { getStyleObject } from "./utils";
 
@@ -6,8 +7,6 @@ const init = async () => {
   const data = await fetchChartData();
 
   const firstChardData = data[0];
-
-  console.log(firstChardData);
 
   const maxYArray = firstChardData.columns
     .slice(1)
@@ -71,5 +70,8 @@ const init = async () => {
   };
 
   observer.observe(box, config);
+
+  // Initial Chart render
+  renderChart(firstChardData, 150, minChartSvg.clientWidth - 150);
 };
 export default init;

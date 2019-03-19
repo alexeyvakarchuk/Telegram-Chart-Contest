@@ -24,7 +24,7 @@ const getCoords = el => {
   };
 };
 
-// *** Simple Drag&Drop ***
+// *** Simple Drag & Drop ***
 
 box.onmousedown = e => {
   const shiftX = e.pageX - getCoords(box).left;

@@ -16,7 +16,7 @@ const fetchChartData = async () => {
 
     return data;
   } catch (e) {
-    console.log("Data fetch errors ::: ", e);
+    console.log("Data fetch error ::: ", e);
   }
 };
 
