@@ -1,5 +1,6 @@
 import fetchChartData from "scripts/fetchChartData";
-import './rangeGraph'
+import "./rangeGraph";
+import { getStyleObject } from "./utils";
 
 const init = async () => {
   const data = await fetchChartData();
@@ -12,7 +13,7 @@ const init = async () => {
     .slice(1)
     .map(el => Math.max(...el.slice(1)));
 
-  const maxY = Math.max(...maxYArray)  + 5;
+  const maxY = Math.max(...maxYArray) + 5;
 
   const minChartSvg = document.querySelector(".minChartSvg");
 
@@ -47,5 +48,28 @@ const init = async () => {
     minChartSvg.appendChild(path);
   });
 
-}
+  // Observes changes for the bottom small chart box
+  const box = document.querySelector(".box");
+
+  const observer = new MutationObserver(mutations => {
+    mutations.forEach(mutation => {
+      const oldStyle = getStyleObject(mutation.oldValue);
+
+      const newStyle = {
+        width: parseInt(box.style.width),
+        left: parseInt(box.style.left)
+      };
+
+      console.log(oldStyle, newStyle);
+    });
+  });
+
+  const config = {
+    attributeFilter: ["style"],
+    attributes: true,
+    attributeOldValue: true
+  };
+
+  observer.observe(box, config);
+};
 export default init;

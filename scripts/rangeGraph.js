@@ -5,9 +5,12 @@ const box = document.querySelector(".box");
 const boxL = document.querySelector(".box__l");
 const boxR = document.querySelector(".box__r");
 
+const initialBoxWidth = 150;
+
 // Set's area's left offset to the end of minChart on initialization
 const setInitialPosition = el => {
-  el.style.left = `${minChartWidth - el.clientWidth}px`;
+  el.style.width = `${initialBoxWidth}px`;
+  el.style.left = `${minChartWidth - initialBoxWidth}px`;
 };
 
 setInitialPosition(box);
