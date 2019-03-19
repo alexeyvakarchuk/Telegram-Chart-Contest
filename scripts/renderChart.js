@@ -14,8 +14,6 @@ const renderChart = (chartData, boxWidth, leftOffset) => {
 
   const proportion = maxY / chartSvg.clientHeight;
 
-  console.log(chartContainer.clientWidth, boxWidth, k, proportion);
-
   chartSvg.setAttribute(
     "viewBox",
     `0 0 ${chartContainer.clientWidth * k * proportion} ${maxY}`
