@@ -1,13 +1,32 @@
+import { arrayExpression } from "babel-types";
+
 const renderChart = (chartData, boxWidth, leftOffset) => {
-  const maxYArray = chartData.columns
-    .slice(1)
-    .map(el => Math.max(...el.slice(1)));
-
-  const maxY = Math.max(...maxYArray) + 5;
-
   const chartContainer = document.querySelector(".chart");
   const chartSvg = document.querySelector(".graph");
   const shartG = chartSvg.querySelector(".charts");
+
+  const leftArrOffset =
+    (leftOffset / chartContainer.clientWidth) *
+    (chartData.columns[0].length - 1);
+
+  const rigthArrOffset =
+    ((leftOffset + boxWidth) / chartContainer.clientWidth) *
+    (chartData.columns[0].length - 1);
+
+  //   console.log(Math.ceil(leftArrOffset), Math.floor(rigthArrOffset));
+
+  const maxYArray = chartData.columns
+    .slice(1)
+    .map(el =>
+      Math.max(
+        ...el.slice(
+          1 + Math.floor(leftArrOffset),
+          1 + Math.ceil(rigthArrOffset)
+        )
+      )
+    );
+
+  const maxY = Math.max(...maxYArray) + 5;
 
   // Koefficient
   const k = chartContainer.clientWidth / boxWidth;
@@ -47,7 +66,8 @@ const renderChart = (chartData, boxWidth, leftOffset) => {
     path.setAttribute("d", d);
     path.setAttribute("fill", "transparent");
     path.setAttribute("stroke", chartData.colors[pathName]);
-    path.setAttribute("stroke-width", 1.5);
+    path.setAttribute("stroke-width", 2 * (maxY / chartSvg.clientHeight));
+    path.setAttribute("stroke-linejoin", "round");
 
     shartG.appendChild(path);
   });

@@ -43,12 +43,15 @@ const init = async () => {
     path.setAttribute("fill", "transparent");
     path.setAttribute("stroke", firstChardData.colors[pathName]);
     path.setAttribute("stroke-width", "10");
+    path.setAttribute("stroke-linejoin", "round");
 
     minChartSvg.appendChild(path);
   });
 
   // Observes changes for the bottom small chart box
   const box = document.querySelector(".box");
+  const shadowLeft = document.querySelector(".shadow--left");
+  const shadowRight = document.querySelector(".shadow--right");
 
   const observer = new MutationObserver(mutations => {
     mutations.forEach(mutation => {
@@ -59,7 +62,10 @@ const init = async () => {
         left: parseInt(box.style.left)
       };
 
-      // console.log(oldStyle, newStyle);
+      shadowLeft.style.width = `${newStyle.left}px`;
+      shadowRight.style.width = `${minChartSvg.clientWidth -
+        newStyle.left -
+        newStyle.width}px`;
 
       renderChart(firstChardData, newStyle.width, newStyle.left);
     });
@@ -75,5 +81,9 @@ const init = async () => {
 
   // Initial Chart render
   renderChart(firstChardData, 150, minChartSvg.clientWidth - 150);
+
+  // Initial Shadows render
+  shadowLeft.style.width = `${minChartSvg.clientWidth - 150}px`;
+  shadowRight.style.width = `0px`;
 };
 export default init;

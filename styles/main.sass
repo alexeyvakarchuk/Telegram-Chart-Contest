@@ -52,13 +52,15 @@ body
 
 .caption
   font-weight: bold
-  margin-bottom: 25px    
+  margin-bottom: 25px   
+  font-size: 18px
+  letter-spacing: 0.5px 
 
 .chart
   width: 100%
   height: 400px
   margin-bottom: 25px
-  background-color: var(--stroke-color)
+  background-color: var(--chart-bg)
   overflow-x: hidden
 
 .min-chart
@@ -147,7 +149,7 @@ body
 
 
 .graph 
-  // width: 100%  
+  display: block 
   height: 100%
 .grid 
   stroke: #eee
@@ -155,9 +157,14 @@ body
 .minChartSvg
   height: 100%
   width: 100%
-.shadow--prev, .shadow--next
+.shadow--left, .shadow--right
   position: absolute
-  width: 100%
   height: 100%
   top: 0
-  background-color: rgba(0,0,0,0.05)
+  background-color: rgba(#eef5f8, 0.75)
+
+.shadow--left
+  left: 0
+
+.shadow--right
+  right: 0
