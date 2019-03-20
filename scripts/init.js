@@ -59,7 +59,9 @@ const init = async () => {
         left: parseInt(box.style.left)
       };
 
-      console.log(oldStyle, newStyle);
+      // console.log(oldStyle, newStyle);
+
+      renderChart(firstChardData, newStyle.width, newStyle.left);
     });
   });
 
