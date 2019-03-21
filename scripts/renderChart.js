@@ -33,10 +33,138 @@ const renderChart = (chartData, boxWidth, leftOffset) => {
 
   const proportion = maxY / chartSvg.clientHeight;
 
+  const viewBoxAnimation = chartSvg.querySelector("#viewBoxAnimation");
+  // console.log(
+  //   viewBoxAnimation.getAttribute("to"),
+  //   `0 0 ${chartContainer.clientWidth * k * proportion} ${maxY}`
+  // );
+
+  // if (!viewBoxAnimation.getAttribute("to")) {
+  //   viewBoxAnimation.setAttribute(
+  //     "from",
+  //     `0 0 ${chartContainer.clientWidth * k * proportion} ${maxY}`
+  //   );
+  //   viewBoxAnimation.setAttribute(
+  //     "to",
+  //     `0 0 ${chartContainer.clientWidth * k * proportion} ${maxY}`
+  //   );
+  // } else {
+  //   console.log(parseInt(viewBoxAnimation.getAttribute("to").slice(-3)));
+  //   viewBoxAnimation.setAttribute(
+  //     "from",
+  //     `0 0 ${chartContainer.clientWidth * k * proportion} ${parseInt(
+  //       viewBoxAnimation.getAttribute("to").slice(-3)
+  //     )}`
+  //   );
+  //   viewBoxAnimation.setAttribute(
+  //     "to",
+  //     `0 0 ${chartContainer.clientWidth * k * proportion} ${maxY}`
+  //   );
+  //   if (parseInt(viewBoxAnimation.getAttribute("to").slice(-3)) !== maxY) {
+  //     viewBoxAnimation.beginElement();
+  //   }
+  // }
+
+  console.log(chartSvg.getAttribute("viewBox"));
+
   chartSvg.setAttribute(
     "viewBox",
     `0 0 ${chartContainer.clientWidth * k * proportion} ${maxY}`
   );
+
+  // if (
+  //   chartSvg.getAttribute("viewBox") &&
+  //   chartSvg.getAttribute("viewBox").length
+  // ) {
+  //   if (parseInt(chartSvg.getAttribute("viewBox").split(" ")[3]) !== maxY) {
+  //     console.log(
+  //       "should animate",
+  //       parseInt(chartSvg.getAttribute("viewBox").split(" ")[3]),
+  //       maxY
+  //     );
+
+  //     console.log(
+  //       "from ::: ",
+  //       `0 0 ${chartContainer.clientWidth * k * proportion} ${parseInt(
+  //         chartSvg.getAttribute("viewBox").split(" ")[3]
+  //       )}`
+  //     );
+
+  //     console.log(
+  //       "to ::: ",
+  //       `0 0 ${chartContainer.clientWidth * k * proportion} ${maxY}`
+  //     );
+
+  //     viewBoxAnimation.setAttribute(
+  //       "from",
+  //       `0 0 ${chartContainer.clientWidth * k * proportion} ${parseInt(
+  //         chartSvg.getAttribute("viewBox").split(" ")[3]
+  //       )}`
+  //     );
+
+  //     viewBoxAnimation.setAttribute(
+  //       "to",
+  //       `0 0 ${chartContainer.clientWidth * k * proportion} ${maxY}`
+  //     );
+
+  //     viewBoxAnimation.beginElement();
+  //   } else if (
+  //     chartContainer.clientWidth * k * proportion !==
+  //     chartSvg.getAttribute("viewBox").split(" ")[2]
+  //   ) {
+  //     console.log(
+  //       `0 0 ${chartContainer.clientWidth * k * proportion} ${maxY}`,
+  //       chartSvg.getAttribute("viewBox").split(" ")[2]
+  //     );
+  //     // viewBoxAnimation.setAttribute(
+  //     //   "from",
+  //     //   `0 0 ${chartContainer.clientWidth * k * proportion} ${maxY}`
+  //     // );
+
+  //     // viewBoxAnimation.setAttribute(
+  //     //   "to",
+  //     //   `0 0 ${chartContainer.clientWidth * k * proportion} ${maxY}`
+  //     // );
+  //     chartSvg.setAttribute(
+  //       "viewBox",
+  //       `0 0 ${chartContainer.clientWidth * k * proportion} ${maxY}`
+  //     );
+
+  //     // viewBoxAnimation.beginElement();
+  //   }
+  // } else {
+  //   console.log("bbb");
+  //   chartSvg.setAttribute(
+  //     "viewBox",
+  //     `0 0 ${chartContainer.clientWidth * k * proportion} ${maxY}`
+  //   );
+
+  //   // console.log(`0 0 ${chartContainer.clientWidth * k * proportion} ${maxY}`);
+
+  //   // viewBoxAnimation.setAttribute(
+  //   //   "from",
+  //   //   `0 0 ${chartContainer.clientWidth * k * proportion} ${maxY}`
+  //   // );
+
+  //   // viewBoxAnimation.setAttribute(
+  //   //   "to",
+  //   //   `0 0 ${chartContainer.clientWidth * k * proportion} ${maxY}`
+  //   // );
+
+  //   // viewBoxAnimation.beginElement();
+
+  //   // viewBoxAnimation.setAttribute(
+  //   //   "from",
+  //   //   `0 0 ${chartContainer.clientWidth * k * proportion} ${parseInt(
+  //   //     viewBoxAnimation.getAttribute("to").slice(-3)
+  //   //   )}`
+  //   // );
+  //   // viewBoxAnimation.beginElement();
+  //   // viewBoxAnimation.setAttribute(
+  //   //   "to",
+  //   //   `0 0 ${chartContainer.clientWidth * k * proportion} ${maxY}`
+  //   // );
+  // }
 
   chartSvg.style.width = chartContainer.clientWidth * k;
 
@@ -55,22 +183,69 @@ const renderChart = (chartData, boxWidth, leftOffset) => {
     return { pathName: pathData[0], d };
   });
 
-  // Remove other(previous) chart paths
-  while (shartG.firstChild) {
-    shartG.removeChild(shartG.firstChild);
-  }
-
   chartPaths.forEach(({ pathName, d }) => {
-    const path = document.createElementNS("http://www.w3.org/2000/svg", "path");
+    const path = document.querySelector(`path#${pathName}`);
+    // console.log(path);
 
-    path.setAttribute("d", d);
-    path.setAttribute("fill", "transparent");
-    path.setAttribute("stroke", chartData.colors[pathName]);
-    path.setAttribute("stroke-width", 2 * (maxY / chartSvg.clientHeight));
-    path.setAttribute("stroke-linejoin", "round");
+    if (path) {
+      const a = path.firstChild;
 
-    shartG.appendChild(path);
+      //   path.removeChild(path.firstChild);
+
+      if (a.getAttribute("to") !== d) {
+        a.setAttribute("from", d);
+        a.setAttribute("to", d);
+        document.querySelector(`path#${pathName} animate`).beginElement();
+      }
+
+      //   path.appendChild(a);
+    } else {
+      // p = path, a = animation
+      const p = document.createElementNS("http://www.w3.org/2000/svg", "path");
+      const a = document.createElementNS(
+        "http://www.w3.org/2000/svg",
+        "animate"
+      );
+
+      p.setAttribute("id", pathName);
+      p.setAttribute("fill", "transparent");
+      p.setAttribute("stroke", chartData.colors[pathName]);
+      p.setAttribute("stroke-width", 2 * (maxY / chartSvg.clientHeight));
+      p.setAttribute("stroke-linejoin", "round");
+
+      a.setAttribute("attributeName", "d");
+      a.setAttribute("fill", "freeze");
+      a.setAttribute("dur", "250ms");
+      a.setAttribute("repeatCount", "1");
+      a.setAttribute("begin", "indefinite");
+      //   a.setAttribute("values", `${d};${d}`);
+
+      a.setAttribute("from", d);
+      a.setAttribute("to", d);
+
+      p.appendChild(a);
+      shartG.appendChild(p);
+
+      document.querySelector(`path#${pathName} animate`).beginElement();
+    }
   });
+
+  // Remove other(previous) chart paths
+  // while (shartG.firstChild) {
+  //   shartG.removeChild(shartG.firstChild);
+  // }
+
+  // chartPaths.forEach(({ pathName, d }) => {
+  //   const path = document.createElementNS("http://www.w3.org/2000/svg", "path");
+
+  //   path.setAttribute("d", d);
+  //   path.setAttribute("fill", "transparent");
+  //   path.setAttribute("stroke", chartData.colors[pathName]);
+  //   path.setAttribute("stroke-width", 2 * (maxY / chartSvg.clientHeight));
+  //   path.setAttribute("stroke-linejoin", "round");
+
+  //   shartG.appendChild(path);
+  // });
 };
 
 export default renderChart;

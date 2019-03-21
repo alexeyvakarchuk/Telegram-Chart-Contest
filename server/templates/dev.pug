@@ -11,6 +11,8 @@ html
       h4.caption Followers
       .chart
         svg.graph(xmlns='http://www.w3.org/2000/svg')
+          animate(id="viewBoxAnimation" attributeName="viewBox" repeatCount="1" from="" to="" dur="150ms" begin="click" fill="freeze")
+          
           //- g#yGrid.grid.y-grid
           //-   line(x1='0', x2='900', y1='380', y2='380')
           //- g.labels.x-labels

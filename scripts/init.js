@@ -8,6 +8,8 @@ const init = async () => {
 
   const firstChardData = data[0];
 
+  console.log(firstChardData);
+
   const maxYArray = firstChardData.columns
     .slice(1)
     .map(el => Math.max(...el.slice(1)));
